@@ -3,47 +3,34 @@ import './App.css';
 
 import JsPDF, { jsPDF } from 'jspdf';
 
-// import { Layout, Space } from 'antd';
 import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Navbar from './components/Navbar';
 import DataTable from './components/DataTable';
 import SelectionBox from './components/SelectionBox';
 import Footer from './components/Footer';
 
-// const { Header, Footer, Sider, Content } = Layout;
-
-
-// const headerStyle: React.CSSProperties = {
-//   textAlign: 'center',
-//   color: '#fff',
-//   height: 64,
-//   paddingInline: 50,
-//   lineHeight: '64px',
-//   backgroundColor: '#7dbcea',
-//   fontSize: '1.5rem'
-// };
-
-// const contentStyle: React.CSSProperties = {
-//   textAlign: 'center',
-//   minHeight: 800,
-//   lineHeight: '120px',
-//   color: '#fff',
-//   backgroundColor: '#108ee9',
-// };
-
-// const footerStyle: React.CSSProperties = {
-//   textAlign: 'center',
-//   color: '#fff',
-//   backgroundColor: '#7dbcea',
-//   height: "150px"
-// };
-
 
 function App() {
 
   const [stack, setStack] = useState("")
 
-  const [data, setData] = useState("");
+  const [data, setData] = useState<any[]>([]);
+
+  const handleFullStackChange = (event: SelectChangeEvent) => {
+    setStack(event.target.value as string);
+  };
+
+  const handleAPIChange = (event: SelectChangeEvent) => {
+    setStack(event.target.value as string);
+  };
+
+  const handleFrontendChange = (event: SelectChangeEvent) => {
+    setStack(event.target.value as string);
+  };
+
+  const handleMobileAppChange = (event: SelectChangeEvent) => {
+    setStack(event.target.value as string);
+  };
 
   console.log(data);
 
@@ -58,7 +45,7 @@ function App() {
     const doc = new jsPDF('p', 'pt', 'a4');
     var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
     var pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
-    var elementHTML = document.querySelector("#content") as HTMLElement;
+    var elementHTML = document.querySelector("#table") as HTMLElement;
     doc.html(elementHTML, {
       callback: function(doc) {
           // doc.addImage("./images/logo.png", "JPEG", 10, 10, 10, 10);
@@ -93,22 +80,148 @@ function App() {
           }
         )
       ).json();
-
       // set state when the data received
       setData(data);
     };
 
     dataFetch();
-  }, []);
+  }, [stack]);
+
+  const DisplayData=data.map(
+    (info)=>{
+        return(
+            <tr>
+                <td style={{border: "1px solid #dddddd", textAlign: "center", padding: "8px"}}>{info.id}</td>
+                <td style={{border: "1px solid #dddddd", textAlign: "center", padding: "8px"}}>{info.feature}</td>
+                <td style={{border: "1px solid #dddddd", textAlign: "center", padding: "8px"}}>{info.estimation}</td>
+            </tr>
+        )
+    }
+  )
+
+  
 
   return (
     <Box className="">
       <Navbar />
-      <SelectionBox />
-      <div id="content">
-        <DataTable />
+      {/* <SelectionBox /> */}
+      <div>
+      <Box
+      sx={{
+        marginTop: "50px",
+        display: "flex",
+        justifyContent: "center",
+        gap: "5px",
+        paddingInline:"30px"
+      }}
+    >
+      <Box sx={{ width: "250px" }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">FullStack</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={stack}
+            label="Age"
+            onChange={handleFullStackChange}
+          >
+            <MenuItem value={"php"}>PHP</MenuItem>
+            <MenuItem value={"wordpress"}>WordPress</MenuItem>
+            <MenuItem value={"django"}>Django</MenuItem>
+            <MenuItem value={"dotnet"}>.NET</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Box sx={{ width: "250px" }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">API</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={stack}
+            label="Age"
+            onChange={handleAPIChange}
+          >
+            <MenuItem value={"springboot"}>Spring Boot</MenuItem>
+            <MenuItem value={"fastapi"}>FastAPI</MenuItem>
+            <MenuItem value={"flask"}>Flask</MenuItem>
+            <MenuItem value={"node"}>Node</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Box sx={{ width: "250px" }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Frontend</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={stack}
+            label="Age"
+            onChange={handleFrontendChange}
+          >
+            <MenuItem value={"react"}>React</MenuItem>
+            <MenuItem value={"vue"}>Vue</MenuItem>
+            <MenuItem value={"angular"}>Angular</MenuItem>
+            <MenuItem value={"nextjs"}>NextJS</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Box sx={{ width: "250px" }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Mobile Application</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={stack}
+            label="Age"
+            onChange={handleMobileAppChange}
+          >
+            <MenuItem value={"nativeandroid"}>Native Android</MenuItem>
+            <MenuItem value={"nativeios"}>Native iOS</MenuItem>
+            <MenuItem value={"flutter"}>Flutter</MenuItem>
+            <MenuItem value={"reactnative"}>React Native</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+    </Box>
       </div>
-      <Button variant="contained" onClick={handlePDFDownload}>Download PDF</Button>
+
+      {data.length < 1 &&(
+        <h1 style={{textAlign: "center"}}>見積もりを概説するには、スタックを選択してください</h1>
+      )}
+
+      {data.length > 1 &&(
+          <div id="table">
+            <table className="table table-striped" style={{fontFamily: "arial, sans-serif", borderCollapse: "collapse", width: "100%", marginTop: "20px", marginLeft: "20px", marginRight: "20px"}}>
+                <thead>
+                    <tr>
+                    <th style={{border: "1px solid #dddddd", textAlign: "center", padding: "8px"}}>No.</th>
+                    <th style={{border: "1px solid #dddddd", textAlign: "center", padding: "8px"}}>Feature</th>
+                    <th style={{border: "1px solid #dddddd", textAlign: "center", padding: "8px"}}>Estimation(m/h)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    
+                    {DisplayData}
+                    
+                </tbody>
+            </table>
+           
+      </div>
+      )}
+      {/* <div id="content">
+        <DataTable />
+      </div> */}
+
+      {data.length > 1 &&(
+        <div style={{textAlign: "center"}}>
+          <Button variant="contained" onClick={handlePDFDownload}>{stack} 推定のダウンロード</Button>
+        </div>
+        
+      )}
+      
+      
       <Footer/>
     </Box>
   );
