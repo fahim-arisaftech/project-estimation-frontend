@@ -48,15 +48,15 @@ function App() {
     var elementHTML = document.querySelector("#table") as HTMLElement;
     doc.html(elementHTML, {
       callback: function(doc) {
-          // doc.addImage("./images/logo.png", "JPEG", 10, 10, 10, 10);
+          doc.addImage("./img/ast.png", "JPEG", 20, 20, 20, 20);
           // doc.addImage("https://promo.bradbrownmagic.com/pdf-flyer/flyers/poster-dark-cmyk.jpg","JPEG",10,10,10,10);
-          doc.textWithLink("AriSaf Tech Ltd.", 100, 100, "");
+          // doc.textWithLink("AriSaf Tech Ltd.", 100, 100, "");
           doc.setTextColor("blue");
-          doc.textWithLink('AriSaf Tech Ltd.', pageWidth - 50, pageHeight - 20, {align: "right"});
-          doc.text("contact us", pageWidth / 2, 100);
+          doc.textWithLink('AriSaf Tech Ltd.', pageWidth - 50, 40, {align: "right"});
+          // doc.text("contact us", pageWidth / 2, 100);
           doc.setFillColor("white");
           // Save the PDF
-          doc.save('sample-document.pdf');
+          doc.save(`${stack}-estimation.pdf`);
       },
       x: 100,
       y: 100,
@@ -192,7 +192,7 @@ function App() {
 
       {data.length > 1 &&(
           <div id="table">
-            <table className="table table-striped" style={{fontFamily: "arial, sans-serif", borderCollapse: "collapse", width: "100%", marginTop: "20px", marginLeft: "20px", marginRight: "20px"}}>
+            <table className="table table-striped" style={{fontFamily: "arial, sans-serif", width: "100%", borderCollapse: "collapse", marginTop: "20px", marginLeft: "20px", marginRight: "20px"}}>
                 <thead>
                     <tr>
                     <th style={{border: "1px solid #dddddd", textAlign: "center", padding: "8px"}}>No.</th>
