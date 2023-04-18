@@ -11,6 +11,12 @@ const Footer = () => {
         marginTop: "50px",
         paddingBlock: "30px",
         color: "#fff",
+        position: "fixed",
+        bottom: 0,
+        width: "100%",
+        boxSizing:"border-box",
+        overflowX:"hidden"
+        
       }}
     >
       <Box>

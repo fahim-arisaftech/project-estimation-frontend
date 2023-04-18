@@ -1,6 +1,8 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
+<style>
 
+</style>
 const SelectionBox = () => {
 
     const [stack, setStack] = useState("django");
@@ -12,7 +14,7 @@ const SelectionBox = () => {
     return(
         <Box
       sx={{
-        marginTop: "50px",
+        marginTop: "80px",
         display: "flex",
         justifyContent: "center",
         gap: "5px",
@@ -53,7 +55,7 @@ const SelectionBox = () => {
           </Select>
         </FormControl>
       </Box>
-      <Box sx={{ width: "250px" }}>
+      <Box sx={{ minWidth: "250px" }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Frontend</InputLabel>
           <Select
@@ -72,9 +74,9 @@ const SelectionBox = () => {
       </Box>
       <Box sx={{ width: "250px" }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Mobile Application</InputLabel>
+          <InputLabel id="demo-controlled-open-select-label" style={{background:"white"}}>Mobile Application</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
+            labelId="demo-controlled-open-select-label"
             id="demo-simple-select"
             value={stack}
             label="Age"

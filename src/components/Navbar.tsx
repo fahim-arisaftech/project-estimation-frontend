@@ -3,7 +3,7 @@ import { AppBar, Box, Divider, Link, Toolbar, Typography } from "@mui/material";
 const Navbar = () => {
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar
           variant="dense"
           style={{ display: "flex", justifyContent: "space-between" }}
@@ -17,7 +17,7 @@ const Navbar = () => {
               />
             </Link>
           </Typography>
-          <Divider />
+        
           <Link href="#" style={{textDecoration:"none"}}>
             <Typography variant="h6" color="white" component="div">
               AriSaf Tech Ltd.
